@@ -1,10 +1,10 @@
 package iOS;
 
-import core.iOSTestCase;
+import core.CoreTestCase;
 import org.junit.Test;
 import ui.WelcomePageObject;
 
-public class GetStartedTest extends iOSTestCase {
+public class GetStartedTest extends CoreTestCase {
     @Test
     public void testPassThroughWelcome() throws Exception {
         WelcomePageObject WelcomePage = new WelcomePageObject(driver);
