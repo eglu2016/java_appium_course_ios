@@ -6,7 +6,7 @@ import ui.WelcomePageObject;
 
 public class GetStartedTest extends iOSTestCase {
     @Test
-    public void testPassThroughWelcome() {
+    public void testPassThroughWelcome() throws Exception {
         WelcomePageObject WelcomePage = new WelcomePageObject(driver);
 
         WelcomePage.waitForLearnMoreLink();
@@ -20,5 +20,7 @@ public class GetStartedTest extends iOSTestCase {
 
         WelcomePage.waitForLearnMoreAboutDataCollectedLink();
         WelcomePage.clickGetStartedButton();
+
+        Thread.sleep(1000);
     }
 }

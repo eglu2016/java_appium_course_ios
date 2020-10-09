@@ -23,18 +23,10 @@ public class MainPageObject {
         this.driver = driver;
     }
 
-    /**
-     * wait for element present
-     * @param by
-     * @param error_message
-     * @param timeoutInSecond
-     * @return
-     */
     public WebElement waitForElementPresent(By by, String error_message, long timeoutInSecond) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSecond);
         wait.withMessage(error_message + "\n");
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(by));
-        return element;
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
     public WebElement waitForElementPresent(By by, String error_message) {
@@ -75,13 +67,6 @@ public class MainPageObject {
         return element.getText();
     }
 
-    /**
-     * waitForElementsPresent
-     * @param by
-     * @param error_message
-     * @param timeOutInSeconds
-     * @return
-     */
     public List<WebElement> waitForElementsPresent(By by, String error_message, long timeOutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
         wait.withMessage(error_message + "\n");
