@@ -3,18 +3,19 @@ package homeworks;
 import core.CoreTestCase;
 import org.junit.Test;
 import ui.SearchPageObject;
+import ui.factories.SearchPageObjectFactory;
 
 public class SimpleScripts extends CoreTestCase {
     @Test
     public void testMethodCreation() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.assertSearchInputHasLabelText();
     }
 
     @Test
     public void testCancelSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("IATA");
         SearchPageObject.waitForSearchResult("Redirected from IATA");
@@ -27,7 +28,7 @@ public class SimpleScripts extends CoreTestCase {
 
     @Test
     public void testCheckWorldsInSearch() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.assertResultsContainsText("Java");

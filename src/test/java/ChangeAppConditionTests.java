@@ -2,11 +2,12 @@ import core.CoreTestCase;
 import org.junit.Test;
 import ui.ArticlePageObject;
 import ui.SearchPageObject;
+import ui.factories.SearchPageObjectFactory;
 
 public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testChangeScreenOrientationOnSearchResults() {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
@@ -27,7 +28,7 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testCheckSearchArticleInBackground() throws InterruptedException {
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
