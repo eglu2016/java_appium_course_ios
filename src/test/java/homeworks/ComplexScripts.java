@@ -6,6 +6,7 @@ import ui.ArticlePageObject;
 import ui.MyListPageObject;
 import ui.NavigationUI;
 import ui.SearchPageObject;
+import ui.factories.ArticlePageObjectFactory;
 import ui.factories.SearchPageObjectFactory;
 
 public class ComplexScripts extends CoreTestCase {
@@ -16,7 +17,7 @@ public class ComplexScripts extends CoreTestCase {
         SearchPageObject.typeSearchLine("Android");
         SearchPageObject.clickByArticleWithSubstring("Android (operating system)");
 
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         String first_article_title = ArticlePageObject.getArticleTitle();
         String name_of_folder = "os_lists";
@@ -50,7 +51,7 @@ public class ComplexScripts extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Android");
         SearchPageObject.clickByArticleWithSubstring("Android (operating system)");
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.assertArticleTitle("Android (operating system)");
     }

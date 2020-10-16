@@ -106,6 +106,27 @@ public class MainPageObject {
         }
     }
 
+    public void swipeUpTillElementAppear(String locator, String error_msg, int max_swipe) {
+        int already_swiped = 0;
+        while (!this.isElementLocatedOnThisScreen(locator)) {
+            if (already_swiped > max_swipe) {
+                assertTrue(error_msg, this.isElementLocatedOnThisScreen(locator));
+            }
+            swipeUpQuick();
+            ++already_swiped;
+        }
+    }
+
+    public boolean isElementLocatedOnThisScreen(String locator) {
+        // получаем расположение по оси Y
+        int elem_location_by_y = this.waitForElementPresent(
+                locator, "Cannot find element by locator " + locator, 1)
+                .getLocation().getY();
+        // длина всего экрана
+        int screen_size_by_y = driver.manage().window().getSize().getHeight();
+        return elem_location_by_y < screen_size_by_y;
+    }
+
     public void swipeElementToLeft(String locator, String error_message) {
         WebElement element = waitForElementPresent(locator, error_message, 10);
         // получаем левую точку по оси Х

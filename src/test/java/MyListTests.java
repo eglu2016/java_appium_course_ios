@@ -4,6 +4,7 @@ import ui.ArticlePageObject;
 import ui.MyListPageObject;
 import ui.NavigationUI;
 import ui.SearchPageObject;
+import ui.factories.ArticlePageObjectFactory;
 import ui.factories.SearchPageObjectFactory;
 
 public class MyListTests extends CoreTestCase {
@@ -13,7 +14,7 @@ public class MyListTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
-        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         String article_title = ArticlePageObject.getArticleTitle();
         String name_of_folder = "Learning programming";

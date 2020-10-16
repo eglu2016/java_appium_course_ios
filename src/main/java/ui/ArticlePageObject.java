@@ -2,6 +2,8 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import platform.Platform;
+
 import static junit.framework.TestCase.assertEquals;
 
 abstract public class ArticlePageObject extends MainPageObject {
@@ -27,7 +29,7 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public WebElement waitForTitleElement() {
         return this.waitForElementPresent(TITLE,
-                "Cannot find article title on page",
+                "\nCannot find article title on page from locator: " + TITLE,
                 15);
     }
 
@@ -37,9 +39,16 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void swipeToFooter() {
-        this.swipeUpToFindElement(FOOTER_ELEMENT,
-                "Cannot find the of article",
-                20);
+        if (Platform.getInstance().isAndroid()) {
+            this.swipeUpToFindElement(
+                    FOOTER_ELEMENT,
+                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT,
+                    40);
+        } else {
+            this.swipeUpTillElementAppear(FOOTER_ELEMENT,
+                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT,
+                    40);
+        }
     }
 
     public void addArticleToMyNewList(String name_of_folder) {

@@ -7,7 +7,7 @@ public class IosArticlePageObject extends ArticlePageObject {
 
     static {
         TITLE = "id:Java (programming language)";
-        FOOTER_ELEMENT = "id:View article in browser";
+        FOOTER_ELEMENT = "xpath://XCUIElementTypeStaticText[@name='View article in browser']";
         // toolbar - Save for later button
         OPTION_ADD_TO_MY_LIST_BUTTON = "xpath://XCUIElementTypeButton[@name='Save for later']";
         // Back button
