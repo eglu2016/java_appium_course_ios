@@ -9,6 +9,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import platform.Platform;
 
 import java.time.Duration;
 import java.util.List;
@@ -88,17 +89,29 @@ public class MainPageObject {
                 .perform();
     }
 
-    public void swipeUpQuick() {
-        swipeUp(200);
+    public void clickElementToTheRightUpperCorner(String locator, String error_msg) {
+        WebElement element = this.waitForElementPresent(locator + "/..", error_msg);
+        int right_x = element.getLocation().getX();
+        int upper_y = element.getLocation().getY();
+        int lower_y = upper_y + element.getSize().getHeight();
+        int middle_y = (upper_y + lower_y) / 2;
+        int width = element.getSize().getWidth();
+
+        int point_to_click_x = (right_x + width) - 3;
+        int point_to_click_y = middle_y;
+
+        TouchAction action = new TouchAction(driver);
+        action.tap(PointOption.point(point_to_click_x, point_to_click_y)).perform();
     }
+
+    public void swipeUpQuick() { swipeUp(200); }
 
     public void swipeUpToFindElement(String locator, String error_message, int max_swipe) {
         int already_swiped = 0;
         while (driver.findElements(this.getLocatorByString(locator)).size() == 0) {
             if (already_swiped > max_swipe) {
                 waitForElementPresent(locator,
-                        "Cannot find element by swiping up" + "\n" + error_message,
-                        0);
+                        "\nCannot find element by swiping up" + "\n" + error_message, 0);
                 return;
             }
             swipeUpQuick();
@@ -135,15 +148,20 @@ public class MainPageObject {
         int right_x = left_x + element.getSize().getWidth();
         int upper_y = element.getLocation().getY();
         int lower_y = upper_y + element.getSize().getHeight();
-
         int middle_y = (upper_y + lower_y) / 2;
+
         TouchAction action = new TouchAction(driver);
-        action
-                .press(PointOption.point(right_x, middle_y))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)))
-                .moveTo(PointOption.point(left_x, middle_y))
-                .release()
-                .perform();
+        action.press(PointOption.point(right_x, middle_y));
+        action.waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)));
+        if (Platform.getInstance().isAndroid()) {
+            action.moveTo(PointOption.point(left_x, middle_y));
+        } else {
+            // вычисляем ширину элемента
+            int offset_x = (-1 * element.getSize().getWidth());
+            action.moveTo(PointOption.point(offset_x, 0));
+        }
+        action.release();
+        action.perform();
     }
 
     public void swipeElementToLeft(WebElement element) {

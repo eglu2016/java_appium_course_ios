@@ -42,6 +42,7 @@ public class CoreTestCase extends TestCase {
         if (Platform.getInstance().isIos()) {
             WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
             WelcomePageObject.clickSkipLink();
+            WelcomePageObject.clickDismissButton();
         }
     }
 }

@@ -7,7 +7,9 @@ import ui.MyListPageObject;
 import ui.NavigationUI;
 import ui.SearchPageObject;
 import ui.factories.ArticlePageObjectFactory;
+import ui.factories.MyListPageObjectFactory;
 import ui.factories.SearchPageObjectFactory;
+import ui.factories.NavigationUiFactory;
 
 public class ComplexScripts extends CoreTestCase {
     @Test
@@ -31,10 +33,10 @@ public class ComplexScripts extends CoreTestCase {
         ArticlePageObject.addArticleToMyList(name_of_folder);
         ArticlePageObject.closeArticle();
 
-        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI NavigationUI = NavigationUiFactory.get(driver);
         NavigationUI.clickMyList();
 
-        MyListPageObject MyListPageObject = new MyListPageObject(driver);
+        MyListPageObject MyListPageObject = MyListPageObjectFactory.get(driver);
         MyListPageObject.openFolderByName(name_of_folder);
         MyListPageObject.swipeByArticleToDelete(first_article_title);
         MyListPageObject.clickByArticleTitleInFolder("Microsoft Windows");

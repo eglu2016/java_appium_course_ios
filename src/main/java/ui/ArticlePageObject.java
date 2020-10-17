@@ -17,7 +17,9 @@ abstract public class ArticlePageObject extends MainPageObject {
             MY_LIST_NAME_INPUT,
             MY_LIST_OK_BUTTON,
             CLOSE_ARTICLE_BUTTON,
-            FOLDER_BY_NAME_TPL;
+            FOLDER_BY_NAME_TPL,
+            CLOSE_BUTTON,
+            LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON;
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -81,6 +83,15 @@ abstract public class ArticlePageObject extends MainPageObject {
         // click Name Folder
         this.waitForElementAndClick(getFolderXpathByName(name_of_folder),
                 "Cannot find folder by name " + name_of_folder, 5);
+    }
+
+    public void addArticleToMySaved() {
+        this.waitForElementAndClick(OPTION_ADD_TO_MY_LIST_BUTTON,
+                "Cannot find option to add article to reading list", 5);
+        this.waitForElementAndClick(LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON,
+                "Cannot find and click 'Log in to sync ...' button", 5);
+        this.waitForElementAndClick(CLOSE_BUTTON,
+                "Cannot find and click 'Close' button", 5);
     }
 
     public void closeArticle() {
