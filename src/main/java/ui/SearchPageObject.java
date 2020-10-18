@@ -2,23 +2,26 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+
 import java.util.List;
+
 import static junit.framework.TestCase.assertTrue;
 
 abstract public class SearchPageObject extends MainPageObject {
 
     protected static String
+            LIST_RESULTS_BY_TILE_AND_DESCRIPTION_TPL,
+            SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_INIT_ELEMENT,
             SEARCH_INPUT,
             SEARCH_CANCEL_BUTTON,
-            SEARCH_RESULT_BY_SUBSTRING_TPL,
             SEARCH_RESULT_ELEMENT,
             SEARCH_EMPTY_RESULT_ELEMENT,
             SEARCH_INIT_TEXT,
             LIST_ITEM_CONTAINER,
             LIST_ITEM_TITLE,
             LIST_ITEM_DESCRIPTION,
-            LIST_RESULTS_BY_TILE_AND_DESCRIPTION_TPL;
+            LIST_RESULTS_BY_TILE_DESCRIPTION;
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver); // берем драйвер из MainPageObject
@@ -28,6 +31,7 @@ abstract public class SearchPageObject extends MainPageObject {
     private static String getResultSearchElement(String substring) {
         return SEARCH_RESULT_BY_SUBSTRING_TPL.replace("{SUBSTRING}", substring);
     }
+
     private static String getResultSearchElementByTitleAndDescription(String subtitle, String subdecription) {
         String return_xpath = LIST_RESULTS_BY_TILE_AND_DESCRIPTION_TPL.replace("{SUBTITLE}", subtitle);
         return return_xpath.replace("{SUBDESCRIPTION}", subdecription);
@@ -129,10 +133,28 @@ abstract public class SearchPageObject extends MainPageObject {
         String xpath = this.getResultSearchElementByTitleAndDescription(title, description);
         List<WebElement> result_items = this.waitForElementsPresent(xpath,
                 "Cannot find results on 'Result page'; when title contains text: " + title +
-                        " and description contains text" + description,
+                        " and description contains text: " + description,
                 15);
         assertTrue(
-                "Amount results on 'Result Page' less 3",
+                "\nAmount results on 'Result Page' less 3",
                 result_items.size() >= 3);
+    }
+
+    public void checkElementsByTitleAndDescription(String text) {
+        int count = 0;
+        List<WebElement> resultList = this.waitForElementsPresent(LIST_RESULTS_BY_TILE_DESCRIPTION,
+                "Cannot find results with text: " + text + " on 'Result page'", 15);
+        for (WebElement element : resultList) {
+            String actValue = element.getText();
+            String[] split = actValue.split(text);
+            int number_of_words_found = split.length - 1;
+            if (number_of_words_found == 2) {
+                count++;
+            }
+        }
+        assertTrue(
+                "\namount results with text " + text +
+                        " in title and description on 'Result Page' less 3; AR = " + count,
+                count >= 3);
     }
 }

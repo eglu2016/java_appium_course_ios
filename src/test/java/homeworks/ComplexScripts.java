@@ -97,9 +97,15 @@ public class ComplexScripts extends CoreTestCase {
 
     @Test
     public void testCheckResultsSearchByTitleAndDescription() {
-        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
-        SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("BMW 3 Series");
-        SearchPageObject.waitForElementByTitleAndDescription("BMW", "BMW");
+        String search_line = "bmw 3 series";
+        String exp_substring = "BMW";
+        SearchPageObject search = SearchPageObjectFactory.get(driver);
+        search.initSearchInput();
+        search.typeSearchLine(search_line);
+        if (Platform.getInstance().isAndroid()) {
+            search.waitForElementByTitleAndDescription(exp_substring, exp_substring);
+        } else {
+            search.checkElementsByTitleAndDescription(exp_substring);
+        }
     }
 }
