@@ -9,6 +9,8 @@ import static junit.framework.TestCase.assertEquals;
 abstract public class ArticlePageObject extends MainPageObject {
 
     protected static String
+            FOLDER_BY_NAME_TPL,
+            TITLE_ARTICLE_TPL,
             TITLE,
             FOOTER_ELEMENT,
             OPTION_BUTTON,
@@ -17,7 +19,6 @@ abstract public class ArticlePageObject extends MainPageObject {
             MY_LIST_NAME_INPUT,
             MY_LIST_OK_BUTTON,
             CLOSE_ARTICLE_BUTTON,
-            FOLDER_BY_NAME_TPL,
             CLOSE_BUTTON,
             LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON;
 
@@ -29,10 +30,19 @@ abstract public class ArticlePageObject extends MainPageObject {
         return FOLDER_BY_NAME_TPL.replace("{FOLDER_NAME}", name_of_folder);
     }
 
+    private static String getArticleXpathByName(String name_of_article) {
+        return TITLE_ARTICLE_TPL.replace("{ARTICLE_NAME}", name_of_article);
+    }
+
     public WebElement waitForTitleElement() {
         return this.waitForElementPresent(TITLE,
-                "\nCannot find article title on page from locator: " + TITLE,
-                15);
+                "\nCannot find article title on page from locator: " + TITLE, 15);
+    }
+
+    public WebElement waitForTitleElement(String title_article) {
+        String locator = this.getArticleXpathByName(title_article);
+        return this.waitForElementPresent(locator,
+                "\nCannot find article title on page from locator: " + locator, 20);
     }
 
     public String getArticleTitle() {
@@ -88,10 +98,14 @@ abstract public class ArticlePageObject extends MainPageObject {
     public void addArticleToMySaved() {
         this.waitForElementAndClick(OPTION_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find option to add article to reading list", 5);
-        this.waitForElementAndClick(LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON,
-                "Cannot find and click 'Log in to sync ...' button", 5);
-        this.waitForElementAndClick(CLOSE_BUTTON,
-                "Cannot find and click 'Close' button", 5);
+        try {
+            this.waitForElementAndClick(LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON,
+                    "Cannot find and click 'Log in to sync ...' button", 3);
+            this.waitForElementAndClick(CLOSE_BUTTON,
+                    "Cannot find and click 'Close' button", 3);
+        } catch (Exception ex) {
+
+        }
     }
 
     public void closeArticle() {

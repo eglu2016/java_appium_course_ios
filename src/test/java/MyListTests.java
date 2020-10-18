@@ -20,6 +20,7 @@ public class MyListTests extends CoreTestCase {
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         String article_title = ArticlePageObject.getArticleTitle();
@@ -30,8 +31,10 @@ public class MyListTests extends CoreTestCase {
         }
         // Back
         ArticlePageObject.closeArticle();
+
         NavigationUI navigationUI = NavigationUiFactory.get(driver);
         navigationUI.clickMyList();
+
         MyListPageObject MyListPageObject = MyListPageObjectFactory.get(driver);
         if (Platform.getInstance().isAndroid()) {
             MyListPageObject.openFolderByName(name_of_folder);

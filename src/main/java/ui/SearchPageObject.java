@@ -87,7 +87,7 @@ abstract public class SearchPageObject extends MainPageObject {
     public void clickByArticleWithSubstring(String substring) {
         String search_result_locator = getResultSearchElement(substring);
         this.waitForElementAndClick(search_result_locator,
-                "Cannot find and click search result with substring " + substring, 15);
+                "\nCannot find and click search result with substring " + substring, 15);
     }
 
     public int getAmountOfFoundArticles() {
