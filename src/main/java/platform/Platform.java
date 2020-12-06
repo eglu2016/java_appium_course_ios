@@ -62,7 +62,7 @@ public class Platform {
         String PathApk = "/Users/evgeniy_g/coures/project/java_appium_course_ios/apks/Wikipedia.app";
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("deviceName", "iPhone SE");
-        capabilities.setCapability("platformVersion", "11.3");
+        capabilities.setCapability("platformVersion", "11.4");
         capabilities.setCapability("app", PathApk);
         return capabilities;
     }

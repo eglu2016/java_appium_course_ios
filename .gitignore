@@ -27,3 +27,7 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea/uiDesigner.xml
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+*.xml
+*.lst
+*.txt
