@@ -1,3 +1,5 @@
+package tests;
+
 import core.CoreTestCase;
 import org.junit.Test;
 import ui.ArticlePageObject;

@@ -8,10 +8,11 @@ public class IosSearchPageObject extends SearchPageObject {
     static {
         // 'Search Wikipedia' input
         SEARCH_INIT_ELEMENT = "xpath://*[@name='Search Wikipedia']";
+        SEARCH_INIT_TEXT = "xpath://*[@name='Search Wikipedia']";
         // Search Wikipedia' input for type text
         SEARCH_INPUT = "xpath://XCUIElementTypeSearchField[@label='Search Wikipedia']";
         // Close button
-        SEARCH_CANCEL_BUTTON = "xpath://XCUIElementTypeButton[@name='Close']";
+        SEARCH_CANCEL_BUTTON = "xpath://*[@name='Close']";
         // Search Result for find article by title and description
         SEARCH_RESULT_BY_SUBSTRING_TPL =
                 "xpath://XCUIElementTypeLink[contains(@name,'{SUBSTRING}')]";
@@ -22,9 +23,8 @@ public class IosSearchPageObject extends SearchPageObject {
         // for get title and description articles
         LIST_RESULTS_BY_TILE_DESCRIPTION = "xpath://XCUIElementTypeCollectionView//XCUIElementTypeLink";
 
-        SEARCH_INIT_TEXT = "xpath://*[contains(@resource-id,'search_container')]" +
-                "/*[@class='android.widget.TextView']";
         LIST_ITEM_CONTAINER = "xpath://*[contains(@resource-id,'page_list_item_container')]";
+
         LIST_ITEM_TITLE = "xpath://*[contains(@resource-id, 'page_list_item_title')]";
         LIST_ITEM_DESCRIPTION = "xpath://*[contains(@resource-id, 'page_list_item_description')]";
 

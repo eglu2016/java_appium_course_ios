@@ -72,7 +72,8 @@ public class MainPageObject {
     public List<WebElement> waitForElementsPresent(String locator, String error_message, long timeOutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
         wait.withMessage(error_message + "\n");
-        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(this.getLocatorByString(locator)));
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+                this.getLocatorByString(locator)));
     }
 
     public void swipeUp(int timeOfSwipe) {
@@ -199,9 +200,7 @@ public class MainPageObject {
                 "Cannot find element " + locator,
                 30);
         String actual_text = element.getText();
-        assertEquals(error_message,
-                actual_text,
-                expected_text);
+        assertEquals(error_message, expected_text, actual_text);
     }
 
     public void assertElementPresent(String locator, String error_message) {

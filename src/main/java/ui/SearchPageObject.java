@@ -2,10 +2,11 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import platform.Platform;
 
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 abstract public class SearchPageObject extends MainPageObject {
 
@@ -64,7 +65,7 @@ abstract public class SearchPageObject extends MainPageObject {
     public void waitForSearchResult(String substring) {
         String search_result_locator = getResultSearchElement(substring);
         this.waitForElementPresent(search_result_locator,
-                "Cannot find search result with substring " + substring, 15);
+                "\nCannot find search result with substring " + substring, 15);
     }
 
     public void waitForCancelButtonToAppear() {
@@ -115,17 +116,31 @@ abstract public class SearchPageObject extends MainPageObject {
     }
 
     public void assertResultsContainsText(String exp_text) {
-        List<WebElement> result_items = this.waitForElementsPresent(LIST_ITEM_CONTAINER,
-                "Cannot find results on result page", 20);
-        for (int i = 0; i < result_items.size() - 1; i++) {
-            String actual_title_value = result_items.get(i)
-                    .findElement(this.getLocatorByString(LIST_ITEM_TITLE)).getText();
-            String actual_description_value = result_items.get(i)
-                    .findElement(this.getLocatorByString(LIST_ITEM_DESCRIPTION)).getText();
-            assertTrue(
-                    "Cannot find word " + exp_text + " in 'title' or 'description' in result page\nAR = " +
-                            actual_title_value + " / " + actual_description_value,
-                    actual_title_value.contains(exp_text) || actual_description_value.contains(exp_text));
+        if (Platform.getInstance().isAndroid()) {
+            List<WebElement> result_items = this.waitForElementsPresent(LIST_ITEM_CONTAINER,
+                    "Cannot find results on result page", 20);
+            for (int i = 0; i < result_items.size() - 1; i++) {
+                String actual_title_value = result_items.get(i)
+                        .findElement(this.getLocatorByString(LIST_ITEM_TITLE)).getText();
+                String actual_description_value = result_items.get(i)
+                        .findElement(this.getLocatorByString(LIST_ITEM_DESCRIPTION)).getText();
+                assertTrue(
+                        "Cannot find word " + exp_text + " in 'title' or 'description' in result page\nAR = " +
+                                actual_title_value + " / " + actual_description_value,
+                        actual_title_value.contains(exp_text) || actual_description_value.contains(exp_text));
+            }
+        } else {
+            int count = 0;
+            List<WebElement> resultList = this.waitForElementsPresent(LIST_RESULTS_BY_TILE_DESCRIPTION,
+                        String.format("\n >>> cannot find results with text: '%s' on 'Result page'", exp_text),
+                        15);
+            for (WebElement element : resultList) {
+                String actValue = element.getText();
+                if (actValue.contains(exp_text)) {
+                    count++;
+                }
+            }
+            assertFalse(String.format(" >>> cannot find word '%s' in description", exp_text), count == 0);
         }
     }
 

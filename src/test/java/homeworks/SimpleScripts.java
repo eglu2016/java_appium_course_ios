@@ -2,6 +2,7 @@ package homeworks;
 
 import core.CoreTestCase;
 import org.junit.Test;
+import platform.Platform;
 import ui.SearchPageObject;
 import ui.factories.SearchPageObjectFactory;
 
@@ -18,11 +19,14 @@ public class SimpleScripts extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("IATA");
-        SearchPageObject.waitForSearchResult("Redirected from IATA");
-        SearchPageObject.waitForSearchResult("Three-letter code designating many airports around the world");
+        SearchPageObject.waitForSearchResult("Redirected from: IATA");
+        SearchPageObject.waitForSearchResult(
+                "Three-letter code designating many airports around the world");
         SearchPageObject.waitForCancelButtonToAppear();
         SearchPageObject.clickCancelSearch();
-        SearchPageObject.clickCancelSearch();
+        if (Platform.getInstance().isAndroid()) {
+            SearchPageObject.clickCancelSearch();
+        }
         SearchPageObject.waitForCancelButtonToDisAppear();
     }
 

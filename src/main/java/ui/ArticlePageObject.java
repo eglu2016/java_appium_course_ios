@@ -36,18 +36,25 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public WebElement waitForTitleElement() {
         return this.waitForElementPresent(TITLE,
-                "\nCannot find article title on page from locator: " + TITLE, 15);
+                "\n ---> Cannot find article title on page from locator: " + TITLE,
+                15);
     }
 
     public WebElement waitForTitleElement(String title_article) {
         String locator = this.getArticleXpathByName(title_article);
         return this.waitForElementPresent(locator,
-                "\nCannot find article title on page from locator: " + locator, 20);
+                "\n ---> Cannot find article title on page from locator: " + locator,
+                15);
     }
 
     public String getArticleTitle() {
         WebElement title_element = waitForTitleElement();
         return title_element.getText();
+    }
+
+    public String getArticleTitle(String title_article) {
+        WebElement titleWebElement = waitForTitleElement(title_article);
+        return titleWebElement.getText();
     }
 
     public void swipeToFooter() {
@@ -114,9 +121,14 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void assertArticleTitle(String article_title) {
-        String actual_title_article = this.getArticleTitle();
+        String actual_title_article = "";
+        if (Platform.getInstance().isAndroid())
+            actual_title_article = this.getArticleTitle();
+        else
+            actual_title_article = this.getArticleTitle(article_title);
         assertEquals(
-                "Article title have been wrong value",
+                String.format("Article title have been wrong value. AR = '%s', ER = '%s'",
+                        actual_title_article, article_title),
                 article_title, actual_title_article);
     }
 }

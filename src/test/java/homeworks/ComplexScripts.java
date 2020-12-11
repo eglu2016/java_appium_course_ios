@@ -23,6 +23,7 @@ public class ComplexScripts extends CoreTestCase {
 
     @Test
     public void testSavedOfTwoArticles() throws InterruptedException {
+        System.out.println("\n\n----- run: testSavedOfTwoArticles ----- ");
         String first_article_title = "";
         String second_article_title = "";
 
@@ -86,17 +87,19 @@ public class ComplexScripts extends CoreTestCase {
 
     @Test
     public void testAssertTitle() {
+        System.out.println("\n\n----- run: testAssertTitle ----- ");
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Android");
-        SearchPageObject.clickByArticleWithSubstring("Android (operating system)");
+        SearchPageObject.clickByArticleWithSubstring(name_of_first_article);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
-        ArticlePageObject.waitForTitleElement();
-        ArticlePageObject.assertArticleTitle("Android (operating system)");
+        ArticlePageObject.waitForTitleElement(name_of_first_article);
+        ArticlePageObject.assertArticleTitle(name_of_first_article);
     }
 
     @Test
     public void testCheckResultsSearchByTitleAndDescription() {
+        System.out.println("\n\n----- run: testCheckResultsSearchByTitleAndDescription ----- ");
         String search_line = "bmw 3 series";
         String exp_substring = "BMW";
         SearchPageObject search = SearchPageObjectFactory.get(driver);
