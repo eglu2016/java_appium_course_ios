@@ -51,8 +51,7 @@ abstract public class SearchPageObject extends MainPageObject {
 
     /**
      * typeSearchLine
-     *
-     * @param search_line
+     * @param search_line -
      */
     public void typeSearchLine(String search_line) {
         this.waitForElementAndSendKeys(SEARCH_INPUT, search_line,

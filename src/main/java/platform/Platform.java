@@ -11,12 +11,9 @@ public class Platform {
     private static final String PLATFORM_IOS = "ios";
     private static final String PLATFORM_ANDROID = "android";
     private static final String APPIUM_URL = "http://127.0.0.1:4723/wd/hub";
-
     private static Platform instance;
 
-    private Platform() {
-
-    }
+    private Platform() { }
 
     public static Platform getInstance() {
         if (instance == null) {
@@ -32,7 +29,7 @@ public class Platform {
         } else if (isIos()) {
             return new IOSDriver(URL, this.getIOSDesiredCapabilities());
         } else {
-            throw new Exception("Cannot detect type of the Driver. Platform value " + this.getPlatformVar());
+            throw new Exception("\n\nCannot detect type of the Driver. Platform value " + this.getPlatformVar());
         }
     }
 
