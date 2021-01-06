@@ -2,6 +2,7 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import platform.Platform;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ abstract public class MyListPageObject extends MainPageObject {
             ARTICLE_BY_TITLE_TPL,
             ALL_ARTICLES_LIST;
 
-    public MyListPageObject(AppiumDriver driver) {
+    public MyListPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 

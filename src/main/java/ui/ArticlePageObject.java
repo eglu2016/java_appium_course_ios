@@ -2,6 +2,7 @@ package ui;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import platform.Platform;
 
 import static junit.framework.TestCase.assertEquals;
@@ -22,7 +23,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             CLOSE_BUTTON,
             LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON;
 
-    public ArticlePageObject(AppiumDriver driver) {
+    public ArticlePageObject(RemoteWebDriver driver) {
         super(driver);
     }
 

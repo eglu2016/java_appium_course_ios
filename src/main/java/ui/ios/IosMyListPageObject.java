@@ -1,6 +1,7 @@
 package ui.ios;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.MyListPageObject;
 
 public class IosMyListPageObject extends MyListPageObject {
@@ -9,7 +10,7 @@ public class IosMyListPageObject extends MyListPageObject {
         ALL_ARTICLES_LIST = "xpath://XCUIElementTypeCell/XCUIElementTypeLink";
     }
 
-    public IosMyListPageObject(AppiumDriver driver) {
+    public IosMyListPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 }

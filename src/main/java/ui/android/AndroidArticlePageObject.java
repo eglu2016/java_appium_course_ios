@@ -1,6 +1,7 @@
 package ui.android;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.ArticlePageObject;
 
 public class AndroidArticlePageObject extends ArticlePageObject {
@@ -16,7 +17,7 @@ public class AndroidArticlePageObject extends ArticlePageObject {
         FOLDER_BY_NAME_TPL = "xpath://*[@text='{FOLDER_NAME}']";
     }
 
-    public AndroidArticlePageObject(AppiumDriver driver) {
+    public AndroidArticlePageObject(RemoteWebDriver driver) {
         super(driver);
     }
 }

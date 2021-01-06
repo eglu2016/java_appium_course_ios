@@ -1,6 +1,7 @@
 package ui.android;
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.SearchPageObject;
 
 public class AndroidSearchPageObject extends SearchPageObject {
@@ -23,7 +24,7 @@ public class AndroidSearchPageObject extends SearchPageObject {
                         "/..//*[contains(@resource-id,'description') and contains(@text,'{SUBDESCRIPTION}')]";
     }
 
-    public AndroidSearchPageObject(AppiumDriver driver) {
+    public AndroidSearchPageObject(RemoteWebDriver driver) {
         super(driver);
     }
 }
