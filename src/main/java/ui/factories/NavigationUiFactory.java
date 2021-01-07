@@ -6,14 +6,16 @@ import platform.Platform;
 import ui.NavigationUI;
 import ui.android.AndroidNavigationUi;
 import ui.ios.IosNavigationUi;
+import ui.mobile_web.MWNavigationUi;
 
 public class NavigationUiFactory {
-
     public static NavigationUI get(RemoteWebDriver driver) {
         if (Platform.getInstance().isAndroid()) {
             return new AndroidNavigationUi(driver);
-        } else {
+        } else if (Platform.getInstance().isIos()) {
             return new IosNavigationUi(driver);
+        } else {
+            return new MWNavigationUi(driver);
         }
     }
 }

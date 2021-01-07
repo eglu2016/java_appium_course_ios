@@ -1,6 +1,5 @@
 package ui;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import platform.Platform;
@@ -12,7 +11,8 @@ abstract public class MyListPageObject extends MainPageObject {
     protected static String
             FOLDER_BY_NAME_TPL,
             ARTICLE_BY_TITLE_TPL,
-            ALL_ARTICLES_LIST;
+            ALL_ARTICLES_LIST,
+            REMOVE_FROM_SAVED_BUTTON;
 
     public MyListPageObject(RemoteWebDriver driver) {
         super(driver);
@@ -24,6 +24,10 @@ abstract public class MyListPageObject extends MainPageObject {
 
     private static String getSavedXpathByArticle(String article_title) {
         return ARTICLE_BY_TITLE_TPL.replace("{TITLE}", article_title);
+    }
+
+    private static String getRemoveButtonByTitle(String article_title) {
+        return REMOVE_FROM_SAVED_BUTTON.replace("{TITLE}", article_title);
     }
 
     public void openFolderByName(String name_of_folder) {
@@ -44,12 +48,25 @@ abstract public class MyListPageObject extends MainPageObject {
 
     public void swipeByArticleToDelete(String article_title) {
         this.waitForArticleToAppearByTitle(article_title);
-        this.swipeElementToLeft(getSavedXpathByArticle(article_title),
-                "\nCannot find saved article by title " + article_title);
+
+        if (Platform.getInstance().isIos() || Platform.getInstance().isAndroid()) {
+            this.swipeElementToLeft(getSavedXpathByArticle(article_title),
+                    "\nCannot find saved article by title " + article_title);
+        } else {
+            String removeLocator = getRemoveButtonByTitle(article_title);
+            this.waitForElementAndClick(removeLocator,
+                    "Не найдена кнопка 'Удаления статьи'", 10);
+        }
+
         if (Platform.getInstance().isIos()) {
             this.clickElementToTheRightUpperCorner(this.getSavedXpathByArticle(article_title),
                     "Cannot find saved article");
         }
+
+        if (Platform.getInstance().isMW()) {
+            driver.navigate().refresh();
+        }
+
         waitForArticleToDisappearByTitle(article_title);
     }
 

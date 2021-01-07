@@ -2,6 +2,7 @@ package tests;
 
 import core.CoreTestCase;
 import org.junit.Test;
+import platform.Platform;
 import ui.ArticlePageObject;
 import ui.SearchPageObject;
 import ui.factories.ArticlePageObjectFactory;
@@ -10,6 +11,9 @@ import ui.factories.SearchPageObjectFactory;
 public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testChangeScreenOrientationOnSearchResults() {
+        if (Platform.getInstance().isMW()) {
+            return;
+        }
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -31,6 +35,9 @@ public class ChangeAppConditionTests extends CoreTestCase {
 
     @Test
     public void testCheckSearchArticleInBackground() throws InterruptedException {
+        if (Platform.getInstance().isMW()) {
+            return;
+        }
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");

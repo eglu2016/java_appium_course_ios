@@ -1,14 +1,11 @@
 package ui;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import platform.Platform;
-
 import static junit.framework.TestCase.assertEquals;
 
 abstract public class ArticlePageObject extends MainPageObject {
-
     protected static String
             FOLDER_BY_NAME_TPL,
             TITLE_ARTICLE_TPL,
@@ -16,6 +13,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             FOOTER_ELEMENT,
             OPTION_BUTTON,
             OPTION_ADD_TO_MY_LIST_BUTTON,
+            OPTION_REMOVE_TO_MY_LIST_BUTTON,
             ADD_TO_MY_LIST_OVERLAY,
             MY_LIST_NAME_INPUT,
             MY_LIST_OK_BUTTON,
@@ -104,21 +102,43 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void addArticleToMySaved() {
-        this.waitForElementAndClick(OPTION_ADD_TO_MY_LIST_BUTTON,
-                "Cannot find option to add article to reading list", 5);
-        try {
-            this.waitForElementAndClick(LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON,
-                    "Cannot find and click 'Log in to sync ...' button", 3);
-            this.waitForElementAndClick(CLOSE_BUTTON,
-                    "Cannot find and click 'Close' button", 3);
-        } catch (Exception ex) {
-
+        if (Platform.getInstance().isMW()) {
+            this.removeArticleFromSavedIfItAdded();
+        } else {
+            this.waitForElementAndClick(OPTION_ADD_TO_MY_LIST_BUTTON,
+                    "Cannot find option to add article to reading list", 5);
+            try {
+                this.waitForElementAndClick(LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON,
+                        "Cannot find and click 'Log in to sync ...' button", 3);
+                this.waitForElementAndClick(CLOSE_BUTTON,
+                        "Cannot find and click 'Close' button", 3);
+            } catch (Exception ex) {
+                System.out.println("-");
+            }
         }
     }
 
+    /**
+     * для удаления статьи, если она уже была ранее добавлена в лист
+     */
+    public void removeArticleFromSavedIfItAdded() {
+        if (this.isElementPresent(OPTION_REMOVE_TO_MY_LIST_BUTTON)) {
+           this.waitForElementAndClick(OPTION_REMOVE_TO_MY_LIST_BUTTON,
+                   "Не нажата кнопка удаления статьи", 1);
+        }
+        this.waitForElementAndClick(OPTION_ADD_TO_MY_LIST_BUTTON,
+                "Не найдена и не нажата кнопка добавления статьи в список, после удаления статьи",
+                15);
+    }
+
     public void closeArticle() {
-        this.waitForElementAndClick(CLOSE_ARTICLE_BUTTON,
-                "Cannot find X link and close article", 5);
+        if (Platform.getInstance().isIos() || Platform.getInstance().isAndroid()) {
+            this.waitForElementAndClick(CLOSE_ARTICLE_BUTTON,
+                    "Cannot find X link and close article", 5);
+        } else {
+            System.out.println("Метод 'closeArticle()' не поддерживается - " +
+                    Platform.getInstance().getPlatformVar());
+        }
     }
 
     public void assertArticleTitle(String article_title) {

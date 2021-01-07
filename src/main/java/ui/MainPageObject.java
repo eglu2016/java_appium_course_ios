@@ -42,6 +42,8 @@ public class MainPageObject {
 
     public WebElement waitForElementAndClick(String locator, String error_message, long timeoutInSecond) {
         WebElement element = this.waitForElementPresent(locator, error_message, timeoutInSecond);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: green; border: 3px solid blue;');", element);
         element.click();
         return element;
     }
@@ -271,6 +273,26 @@ public class MainPageObject {
             return By.cssSelector(locator);
         } else {
             throw new IllegalArgumentException("Cannot get type of locator " + locator_with_type);
+        }
+    }
+
+    public boolean isElementPresent(String locator) {
+        return getAmountOfElements(locator) > 0;
+    }
+
+    public void tryClickElementWithFewAttempts(String locator, String errorMessage, int amountOfAttempts) {
+        int currentAttempts = 0;
+        boolean needMoreAttempts = true;
+        while (needMoreAttempts) {
+            try {
+                this.waitForElementAndClick(locator, errorMessage, 1);
+                needMoreAttempts = false;
+            } catch (Exception e) {
+                if (currentAttempts > amountOfAttempts) {
+                    this.waitForElementAndClick(locator, errorMessage, 1);
+                }
+            }
+            ++ currentAttempts;
         }
     }
  }
