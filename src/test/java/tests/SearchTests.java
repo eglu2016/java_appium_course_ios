@@ -12,11 +12,13 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
+        String expectedSearchResult = "";
         if (Platform.getInstance().isMW()) {
-            SearchPageObject.waitForSearchResult("язык программирования");
+            expectedSearchResult = "язык программирования";
         } else {
-            SearchPageObject.waitForSearchResult("Object-oriented programming language");
+            expectedSearchResult = "Object-oriented programming language";
         }
+        SearchPageObject.waitForSearchResult(expectedSearchResult);
     }
 
     @Test
@@ -41,8 +43,7 @@ public class SearchTests extends CoreTestCase {
         }
         SearchPageObject.typeSearchLine(search_line);
         int amount_of_search_result = SearchPageObject.getAmountOfFoundArticles();
-        assertTrue("We found too few results",
-                amount_of_search_result > 0);
+        assertTrue("We found too few results", amount_of_search_result > 0);
     }
 
     @Test
