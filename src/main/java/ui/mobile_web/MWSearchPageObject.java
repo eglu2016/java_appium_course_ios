@@ -17,10 +17,12 @@ public class MWSearchPageObject extends SearchPageObject {
         // for All elements search
         SEARCH_RESULT_ELEMENT = "css:ul.page-list>li.page-summary";
         // 'No results found' text
-        SEARCH_EMPTY_RESULT_ELEMENT = "xpath://p[text()='No page with this title.']";
+        SEARCH_EMPTY_RESULT_ELEMENT =
+                "xpath://*[contains(text(), 'No page with this title') or contains(text(), 'Нет страниц с таким названием')]";
         // -------------------------------------------
         // for get title and description articles
         LIST_RESULTS_BY_TILE_DESCRIPTION = "xpath://ul[contains(@class,'page-list')]//li";
+        LIST_ITEM_CONTAINER = "xpath://div[contains(@class, 'results-list-container')]";
         LIST_ITEM_CONTAINER = "xpath://div[contains(@class, 'results-list-container')]";
         LIST_ITEM_TITLE = "xpath://ul[contains(@class,'page-list')]//a";
         LIST_ITEM_DESCRIPTION = "xpath://ul[contains(@class,'page-list')]//div[@class='wikidata-description']";

@@ -4,13 +4,13 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
+import org.junit.Assert;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import platform.Platform;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -145,6 +145,11 @@ public class MainPageObject {
         int elem_location_by_y = this.waitForElementPresent(
                 locator, "Cannot find element by locator " + locator, 1)
                 .getLocation().getY();
+        if (Platform.getInstance().isMW()) {
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            Object jsResult = jsExecutor.executeScript("return window.pageYOffset");
+            elem_location_by_y -= Integer.parseInt(jsResult.toString());
+        }
         // длина всего экрана
         int screen_size_by_y = driver.manage().window().getSize().getHeight();
         return elem_location_by_y < screen_size_by_y;
@@ -224,13 +229,34 @@ public class MainPageObject {
         boolean elementIsEnabled = true;
         try {
             driver.findElement(this.getLocatorByString(locator));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             elementIsEnabled = false;
         }
         assertTrue(
                 error_message + "; locator: " + locator,
                 elementIsEnabled);
+    }
+
+    public void scrollWebPageUp() {
+        if (Platform.getInstance().isMW()) {
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            jsExecutor.executeScript("window.scrollBy(0, 250)");
+        } else {
+            System.out.println("Метод 'scrollWebPageUp()' не поддерживается для - " +
+                    Platform.getInstance().getPlatformVar());
+        }
+    }
+
+    public void scrollWebPageTillElementNotVisible(String locator, String errorMessage, int maxSwipe) {
+        int alreadySwipe = 0;
+        WebElement element = this.waitForElementPresent(locator, errorMessage);
+        while (!this.isElementLocatedOnThisScreen(locator)) {
+            scrollWebPageUp();
+            alreadySwipe++;
+            if (alreadySwipe > maxSwipe) {
+                Assert.assertTrue(errorMessage, element.isDisplayed());
+            }
+        }
     }
 
     protected By getLocatorByString(String locator_with_type) {
@@ -243,8 +269,7 @@ public class MainPageObject {
             return By.id(locator);
         } else if (by_type.equals("css")) {
             return By.cssSelector(locator);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Cannot get type of locator " + locator_with_type);
         }
     }

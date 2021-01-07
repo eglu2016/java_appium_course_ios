@@ -60,14 +60,14 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public void swipeToFooter() {
         if (Platform.getInstance().isAndroid()) {
-            this.swipeUpToFindElement(
-                    FOOTER_ELEMENT,
-                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT,
-                    40);
-        } else {
+            this.swipeUpToFindElement(FOOTER_ELEMENT,
+                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT, 40);
+        } else if (Platform.getInstance().isIos()) {
             this.swipeUpTillElementAppear(FOOTER_ELEMENT,
-                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT,
-                    40);
+                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT, 40);
+        } else {
+            this.scrollWebPageTillElementNotVisible(FOOTER_ELEMENT,
+                    "\nCannot find the of article by locator: " + FOOTER_ELEMENT, 40);
         }
     }
 

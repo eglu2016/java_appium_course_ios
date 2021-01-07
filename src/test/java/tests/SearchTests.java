@@ -2,6 +2,7 @@ package tests;
 
 import core.CoreTestCase;
 import org.junit.Test;
+import platform.Platform;
 import ui.SearchPageObject;
 import ui.factories.SearchPageObjectFactory;
 
@@ -11,7 +12,11 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.waitForSearchResult("Object-oriented programming language");
+        if (Platform.getInstance().isMW()) {
+            SearchPageObject.waitForSearchResult("язык программирования");
+        } else {
+            SearchPageObject.waitForSearchResult("Object-oriented programming language");
+        }
     }
 
     @Test
@@ -27,7 +32,13 @@ public class SearchTests extends CoreTestCase {
     public void testAmountOfNotEmptySearch() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
-        String search_line = "linkin park discography";
+
+        String search_line = "";
+        if (Platform.getInstance().isMW()) {
+            search_line = "Дискография Linkin Park";
+        } else {
+            search_line = "linkin park discography";
+        }
         SearchPageObject.typeSearchLine(search_line);
         int amount_of_search_result = SearchPageObject.getAmountOfFoundArticles();
         assertTrue("We found too few results",

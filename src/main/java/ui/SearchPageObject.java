@@ -81,7 +81,7 @@ abstract public class SearchPageObject extends MainPageObject {
     public void waitForEmptyResultsLabel() {
         this.waitForElementPresent(
                 SEARCH_EMPTY_RESULT_ELEMENT,
-                "Cannot find empty result label", 15);
+                "Cannot find empty result label - " + SEARCH_EMPTY_RESULT_ELEMENT, 15);
     }
 
     public void clickCancelSearch() {
