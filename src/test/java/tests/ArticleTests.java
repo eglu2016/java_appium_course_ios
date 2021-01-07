@@ -2,6 +2,7 @@ package tests;
 
 import core.CoreTestCase;
 import org.junit.Test;
+import platform.Platform;
 import ui.ArticlePageObject;
 import ui.SearchPageObject;
 import ui.factories.ArticlePageObjectFactory;
@@ -13,12 +14,17 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        String expectedTitle = "";
+        if (Platform.getInstance().isMW()) {
+            SearchPageObject.clickByArticleWithSubstring("язык программирования");
+            expectedTitle = "Java";
+        } else {
+            SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+            expectedTitle = "Java (programming language)";
+        }
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         String article_title = ArticlePageObject.getArticleTitle();
-        assertEquals("We see unexpected title!",
-                "Java (programming language)",
-                article_title);
+        assertEquals("We see unexpected title!", expectedTitle, article_title);
     }
 
     @Test
@@ -26,7 +32,11 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
-        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        if (Platform.getInstance().isMW()) {
+            SearchPageObject.clickByArticleWithSubstring("язык программирования");
+        } else {
+            SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
+        }
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
         ArticlePageObject.waitForTitleElement();
         ArticlePageObject.swipeToFooter();
