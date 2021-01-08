@@ -131,6 +131,9 @@ abstract public class ArticlePageObject extends MainPageObject {
                 15);
     }
 
+    /**
+     * Закрыть статью
+     */
     public void closeArticle() {
         if (Platform.getInstance().isIos() || Platform.getInstance().isAndroid()) {
             this.waitForElementAndClick(CLOSE_ARTICLE_BUTTON,

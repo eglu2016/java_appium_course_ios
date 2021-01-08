@@ -43,7 +43,7 @@ abstract public class MyListPageObject extends MainPageObject {
 
     public void waitForArticleToDisappearByTitle(String article_title) {
         this.waitForElementIsNotPresent(getSavedXpathByArticle(article_title),
-                "Saved article still present with title " + article_title, 15);
+                "\nSaved article still present with title - " + article_title, 15);
     }
 
     public void swipeByArticleToDelete(String article_title) {
@@ -57,16 +57,13 @@ abstract public class MyListPageObject extends MainPageObject {
             this.waitForElementAndClick(removeLocator,
                     "Не найдена кнопка 'Удаления статьи'", 10);
         }
-
         if (Platform.getInstance().isIos()) {
             this.clickElementToTheRightUpperCorner(this.getSavedXpathByArticle(article_title),
                     "Cannot find saved article");
         }
-
         if (Platform.getInstance().isMW()) {
             driver.navigate().refresh();
         }
-
         waitForArticleToDisappearByTitle(article_title);
     }
 
