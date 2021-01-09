@@ -42,8 +42,11 @@ public class MainPageObject {
 
     public WebElement waitForElementAndClick(String locator, String error_message, long timeoutInSecond) {
         WebElement element = this.waitForElementPresent(locator, error_message, timeoutInSecond);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].setAttribute('style', 'background: green; border: 3px solid blue;');", element);
+        if (Platform.getInstance().isMW()) {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript(
+                    "arguments[0].setAttribute('style', 'background: green; border: 3px solid blue;');", element);
+        }
         element.click();
         return element;
     }

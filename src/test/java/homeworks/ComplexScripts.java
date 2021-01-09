@@ -116,19 +116,22 @@ public class ComplexScripts extends CoreTestCase {
     @Test
     public void testAssertTitle() {
         System.out.println("\n\n----- run: testAssertTitle ----- ");
-        String name_of_first_article = "";
+        String searchLine = "Android";
+        String descriptionArticle = "", headingArticle = "";
         if (Platform.getInstance().isMW()) {
-            name_of_first_article = "";
+            descriptionArticle = "одиннадцатая версия ОС Android";
+            headingArticle = "Android 11";
         } else {
-            name_of_first_article = "Android (operating system)";
+            descriptionArticle = "Android (operating system)";
+            headingArticle = descriptionArticle;
         }
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
-        SearchPageObject.typeSearchLine("Android");
-        SearchPageObject.clickByArticleWithSubstring(name_of_first_article);
+        SearchPageObject.typeSearchLine(searchLine);
+        SearchPageObject.clickByArticleWithSubstring(descriptionArticle);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);
-        ArticlePageObject.waitForTitleElement(name_of_first_article);
-        ArticlePageObject.assertArticleTitle(name_of_first_article);
+        ArticlePageObject.waitForTitleElement(headingArticle);
+        ArticlePageObject.assertArticleTitle(headingArticle);
     }
 
     @Test
