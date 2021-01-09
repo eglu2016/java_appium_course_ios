@@ -8,13 +8,12 @@ import homeworks.*;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
+        ComplexScripts.class,
+        SimpleScripts.class
         // ArticleTests.class,
         // ChangeAppConditionTests.class,
         // GetStartedTest.class,
         // MyListTests.class,
-        // SearchTests.class,
-        ComplexScripts.class
-        //SimpleScripts.class
-
+        // SearchTests.class
 })
 public class TestSuite { }

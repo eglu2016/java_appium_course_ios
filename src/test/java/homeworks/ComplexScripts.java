@@ -92,22 +92,20 @@ public class ComplexScripts extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             myList.openFolderByName(FOLDER_NAME_FOR_ARTICLES);
         }
-        System.out.println("first_article_title = " + first_article_title);
         myList.swipeByArticleToDelete(first_article_title);
         Thread.sleep(1000);
 
         if (Platform.getInstance().isAndroid()) {
             myList.clickByArticleTitleInFolder("Microsoft Windows");
             String actual_title_article = article.getArticleTitle();
-            assertEquals(
-                    "\nArticle title have been wrong value after opened",
+            assertEquals(" :: article title have been wrong value after opened",
                     second_article_title, actual_title_article);
         } else {
-            assertEquals("\nWrong total amount articles in 'All Articles' list after deleted",
+            assertEquals(" :: wrong total amount articles in 'All Articles' list after deleted",
                     1, myList.getTotalAmountArticlesInList());
             ArrayList<String> articles_value = new ArrayList<String>();
             articles_value = myList.getTextArticlesFromList();
-            assertTrue("\nIncorrect article text in 'All Articles' list.",
+            assertTrue(" :: incorrect article text in 'All Articles' list.",
                     articles_value.get(0).contains(second_article_title));
         }
         Thread.sleep(500);
