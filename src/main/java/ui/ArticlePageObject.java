@@ -42,8 +42,7 @@ abstract public class ArticlePageObject extends MainPageObject {
     public WebElement waitForTitleElement(String title_article) {
         String locator = this.getArticleXpathByName(title_article);
         return this.waitForElementPresent(locator,
-                "\n ---> Cannot find article title on page from locator: " + locator,
-                15);
+                "\n :: Cannot find article title on page from locator: " + locator, 15);
     }
 
     public String getArticleTitle() {
@@ -69,26 +68,33 @@ abstract public class ArticlePageObject extends MainPageObject {
         }
     }
 
+    /**
+     * для добавления первой статьи в Лист чтения (Add to reading list)
+     * @param name_of_folder
+     */
     public void addArticleToMyNewList(String name_of_folder) {
         this.waitForElementAndClick(OPTION_BUTTON,
                 "Cannot find and press 'More options' button", 5);
         this.waitForElementAndClick(OPTION_ADD_TO_MY_LIST_BUTTON,
                 "Cannot find and press 'Add to reading list' item", 5);
-        // click 'Got It'
+        // click 'Got It' (только для первой статьи)
         this.waitForElementAndClick(ADD_TO_MY_LIST_OVERLAY,
-                "Cannot find and press 'Got It' button", 5);
+                    " :: Cannot find and press 'Got It' button", 5);
         // clear Name of List input
         this.waitForElementAndClear(MY_LIST_NAME_INPUT,
                 "Cannot find and clear 'Name of List' input", 10);
-        // set Learning programing in input
-        this.waitForElementAndSendKeys(MY_LIST_NAME_INPUT,
-                name_of_folder,
+        // set Name Folder in input
+        this.waitForElementAndSendKeys(MY_LIST_NAME_INPUT, name_of_folder,
                 "Cannot put text in 'Name of List' input", 5);
         // click 'OK'
         this.waitForElementAndClick(MY_LIST_OK_BUTTON,
                 "Cannot find and press 'OK' button", 5);
     }
 
+    /**
+     * для добавления второй статьи в Лист чтения (Add to reading list)
+     * @param name_of_folder - имя папки для сохранения
+     */
     public void addArticleToMyList(String name_of_folder) {
         // click More options
         this.waitForElementAndClick(OPTION_BUTTON,

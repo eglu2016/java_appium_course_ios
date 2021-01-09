@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ComplexScripts extends CoreTestCase {
     private static String
-            name_of_folder = "os_lists",
+            FOLDER_NAME_FOR_ARTICLES = "FOLDER_ARTICLES",
             login = "rtstender2021",
             password = "Aasd654321";
 
@@ -40,7 +40,7 @@ public class ComplexScripts extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             article.waitForTitleElement();
             first_article_title = article.getArticleTitle();
-            article.addArticleToMyNewList(name_of_folder);
+            article.addArticleToMyNewList(FOLDER_NAME_FOR_ARTICLES);
         } else if (Platform.getInstance().isIos()) {
             article.waitForTitleElement(name_of_first_article);
             first_article_title = name_of_first_article;
@@ -57,7 +57,7 @@ public class ComplexScripts extends CoreTestCase {
             AuthorizationPageObject.enterLoginData(login, password);
             AuthorizationPageObject.submitForm();
             article.waitForTitleElement();
-            assertEquals("Мы не на той же странице после авторизации",
+            assertEquals(" :: мы не на той же странице после авторизации",
                     "Android", article.getArticleTitle());
             article.addArticleToMySaved();
         }
@@ -71,7 +71,8 @@ public class ComplexScripts extends CoreTestCase {
         if (Platform.getInstance().isAndroid()) {
             article.waitForTitleElement();
             second_article_title = article.getArticleTitle();
-            article.addArticleToMyNewList(name_of_folder);
+            article.addArticleToMyList(FOLDER_NAME_FOR_ARTICLES);
+
         } else if (Platform.getInstance().isIos()) {
             article.waitForTitleElement(name_of_second_article);
             second_article_title = name_of_second_article;
@@ -89,7 +90,7 @@ public class ComplexScripts extends CoreTestCase {
 
         MyListPageObject myList = MyListPageObjectFactory.get(driver);
         if (Platform.getInstance().isAndroid()) {
-            myList.openFolderByName(name_of_folder);
+            myList.openFolderByName(FOLDER_NAME_FOR_ARTICLES);
         }
         System.out.println("first_article_title = " + first_article_title);
         myList.swipeByArticleToDelete(first_article_title);
@@ -121,8 +122,7 @@ public class ComplexScripts extends CoreTestCase {
             descriptionArticle = "одиннадцатая версия ОС Android";
             headingArticle = "Android 11";
         } else {
-            descriptionArticle = "Android (operating system)";
-            headingArticle = descriptionArticle;
+            headingArticle = descriptionArticle = "Android (operating system)";
         }
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
