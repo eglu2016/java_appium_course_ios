@@ -7,7 +7,7 @@ public class MWSearchPageObject extends SearchPageObject {
     static {
         // кнопка Поиск (лупа)
         SEARCH_INIT_ELEMENT = "css:button#searchIcon";
-        SEARCH_INIT_TEXT = "xpath://form/*[@name='search']";
+        SEARCH_INIT_TEXT = "xpath://form/*[@aria-label='Искать в Википедии']";
         // Search Wikipedia' input for type text
         SEARCH_INPUT = "css:form>input[type='search']";
         // Close button

@@ -223,11 +223,12 @@ public class MainPageObject {
     }
 
     public void assertElementHasText(String locator, String expected_text, String error_message) {
-        WebElement element = waitForElementPresent(locator,
-                "Cannot find element " + locator,
-                30);
-        String actual_text = element.getText();
-        assertEquals(error_message, expected_text, actual_text);
+        WebElement element = waitForElementPresent(locator, " :: Cannot find element " + locator, 30);
+        String actualText = element.getText();
+        if (actualText.equals("")) {
+            actualText = element.getAttribute("aria-label");
+        }
+        assertEquals(error_message, expected_text, actualText);
     }
 
     public void assertElementPresent(String locator, String error_message) {

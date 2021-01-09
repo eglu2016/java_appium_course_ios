@@ -105,9 +105,14 @@ abstract public class SearchPageObject extends MainPageObject {
      * check label text in Search Wikipedia input
      */
     public void assertSearchInputHasLabelText() {
+        String expectedLabel = "";
+        if (Platform.getInstance().isMW()) {
+            expectedLabel = "Искать в Википедии";
+        } else {
+            expectedLabel = "Search Wikipedia";
+        }
         this.assertElementHasText(SEARCH_INIT_TEXT,
-                "Search Wikipedia",
-                "Search wikipedia input has not label text 'Search Wikipedia'");
+                expectedLabel, "Search wikipedia input has not label text 'Search Wikipedia'");
     }
 
     public void assertResultsContainsText(String exp_text) {
