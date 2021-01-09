@@ -26,6 +26,8 @@ public class MWSearchPageObject extends SearchPageObject {
         LIST_ITEM_CONTAINER = "xpath://div[contains(@class, 'results-list-container')]";
         LIST_ITEM_TITLE = "xpath://ul[contains(@class,'page-list')]//a";
         LIST_ITEM_DESCRIPTION = "xpath://ul[contains(@class,'page-list')]//div[@class='wikidata-description']";
+        LIST_RESULTS_BY_TILE_AND_DESCRIPTION_TPL =
+                "xpath://li/a[contains(@data-title, '{SUBTITLE}')]//div[contains(text(),'{SUBDESCRIPTION}')]";
     }
     public MWSearchPageObject(RemoteWebDriver driver) {
         super(driver);

@@ -12,7 +12,6 @@ import ui.factories.NavigationUiFactory;
 import java.util.ArrayList;
 
 public class ComplexScripts extends CoreTestCase {
-
     private static String
             name_of_folder = "os_lists",
             login = "rtstender2021",
@@ -137,15 +136,21 @@ public class ComplexScripts extends CoreTestCase {
     @Test
     public void testCheckResultsSearchByTitleAndDescription() {
         System.out.println("\n\n----- run: testCheckResultsSearchByTitleAndDescription ----- ");
-        String search_line = "bmw 3 series";
-        String exp_substring = "BMW";
+        String searchLine = "", expSubstring = "";
+        if (Platform.getInstance().isMW()) {
+            searchLine = "Android";
+            expSubstring = "Android";
+        } else {
+            searchLine = "bmw 3 series";
+            expSubstring = "BMW";
+        }
         SearchPageObject search = SearchPageObjectFactory.get(driver);
         search.initSearchInput();
-        search.typeSearchLine(search_line);
-        if (Platform.getInstance().isAndroid()) {
-            search.waitForElementByTitleAndDescription(exp_substring, exp_substring);
+        search.typeSearchLine(searchLine);
+        if (Platform.getInstance().isAndroid() || Platform.getInstance().isMW()) {
+            search.waitForElementByTitleAndDescription(expSubstring, expSubstring);
         } else {
-            search.checkElementsByTitleAndDescription(exp_substring);
+            search.checkElementsByTitleAndDescription(expSubstring);
         }
     }
 }
