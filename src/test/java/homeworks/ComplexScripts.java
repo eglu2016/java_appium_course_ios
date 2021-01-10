@@ -112,7 +112,7 @@ public class ComplexScripts extends CoreTestCase {
     }
 
     @Test
-    public void testAssertTitle() {
+    public void testAssertTitle() throws InterruptedException {
         System.out.println("\n\n----- run: testAssertTitle ----- ");
         String searchLine = "Android";
         String descriptionArticle = "", headingArticle = "";

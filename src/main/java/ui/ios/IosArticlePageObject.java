@@ -17,6 +17,8 @@ public class IosArticlePageObject extends ArticlePageObject {
         LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON = "id:Log in to sync your saved articles";
         // X button
         CLOSE_BUTTON = "id:close";
+        // battery power
+        BATTERY_POWER_ELEMENT = "xpath://XCUIElementTypeOther[@name='100% battery power']";
     }
 
     public IosArticlePageObject(RemoteWebDriver driver) {

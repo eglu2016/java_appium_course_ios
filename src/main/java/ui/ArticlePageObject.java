@@ -19,6 +19,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             MY_LIST_OK_BUTTON,
             CLOSE_ARTICLE_BUTTON,
             CLOSE_BUTTON,
+            BATTERY_POWER_ELEMENT,
             LOG_IN_TO_SYNC_YOUR_SAVED_ARTICLES_BUTTON;
 
     public ArticlePageObject(RemoteWebDriver driver) {
@@ -35,14 +36,39 @@ abstract public class ArticlePageObject extends MainPageObject {
 
     public WebElement waitForTitleElement() {
         return this.waitForElementPresent(TITLE,
-                "\n ---> Cannot find article title on page from locator: " + TITLE,
+                "\n :: Cannot find article title on page from locator: " + TITLE,
                 15);
     }
 
     public WebElement waitForTitleElement(String title_article) {
+        WebElement webElement = null;
         String locator = this.getArticleXpathByName(title_article);
-        return this.waitForElementPresent(locator,
-                "\n :: Cannot find article title on page from locator: " + locator, 15);
+        if (Platform.getInstance().isIos()) {
+            boolean isPresentElement = false;
+            int numberOfAttempts = 0;
+            while (!isPresentElement) {
+                try {
+                    this.waitForElementPresent(locator, "-" + locator, 1);
+                    isPresentElement = true;
+                } catch (Exception e) {
+                    isPresentElement = false;
+                }
+                numberOfAttempts ++;
+
+                if (isPresentElement) {
+                    webElement = this.waitForElementPresent(locator,
+                            "\n :: Cannot find article title on page from locator: " + locator, 1);
+                    break;
+                }
+                if (numberOfAttempts >= 10) {
+                    break;
+                }
+            }
+        } else {
+            webElement = this.waitForElementPresent(locator,
+                    "\n :: Cannot find article title on page from locator: " + locator, 15);
+        }
+        return webElement;
     }
 
     public String getArticleTitle() {

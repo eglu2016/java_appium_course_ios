@@ -53,6 +53,7 @@
             <version>3.14.0</version>
         </dependency>
 
+        <!-- 6.1.0 -->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
